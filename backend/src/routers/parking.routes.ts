@@ -11,6 +11,18 @@ const router = Router();
 // Public routes
 router.get("/", parkingController.getParkingSlots);
 router.get("/available", parkingController.getAvailableSlots);
+router.post(
+   "/",
+   authMiddleware,
+   roleMiddleware(["ADMIN"]),
+   parkingController.createParkingSlot
+);
+
+router.get(
+   "/:id",
+   authMiddleware,
+   parkingController.getParkingSlotById
+);
 
 // Protected routes
 router.post(

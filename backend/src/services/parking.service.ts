@@ -22,6 +22,33 @@ class ParkingService {
       });
    }
 
+   async createParkingSlot(slotData: {
+      floor: number;
+      number: string;
+      vehicleType: VehicleType;
+      isAvailable?: boolean;
+   }): Promise<ParkingSlot> {
+      return prisma.parkingSlot.create({
+         data: {
+            floor: slotData.floor,
+            number: slotData.number,
+            vehicleType: slotData.vehicleType,
+            isAvailable: slotData.isAvailable ?? true,
+         },
+      });
+   };
+
+   async getParkingSlotById(id: string): Promise<ParkingSlot | null> {
+      return prisma.parkingSlot.findUnique({
+         where: { id },
+         include: {
+            // Include related data if needed (e.g., current vehicle)
+            vehicle: true,
+            bookings: true
+         }
+      });
+   };
+
    async bookSlot(bookingData: CreateBookingDto): Promise<Booking> {
       const { parkingSlotId, vehicleId, startTime } = bookingData;
 
@@ -72,7 +99,7 @@ class ParkingService {
 
       const newEndTime = new Date(
          (booking.endTime ? booking.endTime : new Date()).getTime() +
-            additionalHours * 60 * 60 * 1000
+         additionalHours * 60 * 60 * 1000
       );
 
       return prisma.booking.update({

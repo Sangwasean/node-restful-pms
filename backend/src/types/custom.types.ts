@@ -2,6 +2,7 @@
 import { IsInt, IsNotEmpty, IsDateString, IsString, IsEnum, IsOptional } from "class-validator";
 
 import { UserRole } from "./enums";
+import { VehicleType } from "@prisma/client";
 
 export class CreateBookingDto {
    @IsString()
@@ -27,6 +28,14 @@ export class ExtendBookingDto {
    additionalHours: number;
 }
 
+
+export type CreateParkingSlotDto = {
+   floor: number;
+   number: string;
+   vehicleType: VehicleType;
+   isAvailable?: boolean;
+};
+
 export class CreateUserDto {
    @IsNotEmpty()
    email: string;
@@ -42,7 +51,7 @@ export class CreateUserDto {
 
    @IsOptional()
    @IsEnum(UserRole)
-   role ?: UserRole;
+   role?: UserRole;
 }
 
 export class LoginDto {

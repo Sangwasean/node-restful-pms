@@ -110,28 +110,7 @@
           }
         }
       },
-      "/parking-slots/available": {
-        "get": {
-          "summary": "Get available parking slots",
-          "description": "Retrieve a list of currently available parking slots",
-          "tags": ["Parking"],
-          "responses": {
-            "200": {
-              "description": "Successfully retrieved available parking slots",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/ParkingSlotResponse"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
+
       "post": {
         "summary": "Create a new parking slot (Admin only)",
         "tags": ["Parking"],
@@ -140,6 +119,7 @@
             "bearerAuth": []
           }
         ],
+
         "requestBody": {
           "required": true,
           "content": {
@@ -163,6 +143,28 @@
           },
           "403": {
             "description": "Forbidden - Insufficient permissions"
+          }
+        }
+      }
+    },
+    "/parking-slots/available": {
+      "get": {
+        "summary": "Get available parking slots",
+        "description": "Retrieve a list of currently available parking slots",
+        "tags": ["Parking"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved available parking slots",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParkingSlotResponse"
+                  }
+                }
+              }
+            }
           }
         }
       }
