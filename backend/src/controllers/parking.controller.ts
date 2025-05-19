@@ -1,5 +1,5 @@
 
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import parkingService from "../services/parking.service";
 import { CreateBookingDto, CreateParkingSlotDto, ExtendBookingDto } from "../types/custom.types";
 import asyncHandler from 'express-async-handler';

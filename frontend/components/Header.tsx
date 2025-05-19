@@ -1,20 +1,20 @@
 "use client";
-import React, { useState } from 'react';
-import { Menu, X, User, LogIn } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import React, { useState } from "react";
+import { Menu, X, User, LogIn } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Search Buses', href: '/search' },
-    { name: 'My Bookings', href: '/bookings' },
-    { name: 'Admin Panel', href: '/admin' },
+    { name: "Home", href: "/" },
+    { name: "Search Buses", href: "/search" },
+    { name: "My Bookings", href: "/bookings" },
+    { name: "Admin Panel", href: "/admin" },
   ];
 
   const toggleMenu = () => {
@@ -31,10 +31,12 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-bus-primary">BusBooking</span>
+              <span className="text-xl font-bold text-bus-primary">
+                BusBooking
+              </span>
             </Link>
           </div>
-          
+
           <nav className="hidden md:block">
             <ul className="flex space-x-8">
               {navigation.map((item) => (
@@ -54,7 +56,7 @@ const Header: React.FC = () => {
               ))}
             </ul>
           </nav>
-          
+
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/login">
               <Button variant="ghost" size="sm" className="flex items-center">
@@ -62,11 +64,11 @@ const Header: React.FC = () => {
                 Login
               </Button>
             </Link>
-            <Link href="/register">
+            <Link href="/signup">
               <Button size="sm">Sign Up</Button>
             </Link>
           </div>
-          
+
           <div className="flex md:hidden">
             <button
               type="button"
@@ -84,7 +86,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       {isMenuOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1">
@@ -113,7 +115,7 @@ const Header: React.FC = () => {
                 Login
               </Link>
               <Link
-                href="/register"
+                href="/signup"
                 className="flex items-center px-3 py-2 text-base font-medium bg-bus-primary text-white rounded-md"
                 onClick={toggleMenu}
               >

@@ -18,8 +18,10 @@ const app = express();
 // Middlewares
 app.use(cors(
   {
-    origin:"http://localhost:7654",
-    credentials:true,
+    origin: ['http://localhost:3000'], // Add your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   }
 ));
 app.use(morgan("dev"));
@@ -31,7 +33,7 @@ app.use("/api/v1", router);
 
 //Swagger
 
-app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(SwaggerDocumentation))
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(SwaggerDocumentation))
 
 
 

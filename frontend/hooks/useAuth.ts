@@ -1,8 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { authorizedAPI, unauthorizedAPI } from "@/lib/api";
+
+import { useMutation } from "@tanstack/react-query";
+import  authorizedAPI from "@/lib/api";
+import  unauthorizedAPI  from "@/lib/api";
 import handleApiRequest from "@/utils/handleApiRequest";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useEffect } from "react";
 
 interface User {
    id: string;

@@ -1,43 +1,26 @@
-import axios, { AxiosInstance } from "axios";
-import { Cookies } from "react-cookie";
+import axios from 'axios';
 
-const cookies = new Cookies();
-
-const API_URL = "http://localhost:5000/api/v1";
-
-const commonHeaders = {
-   "Content-Type": "application/json",
-};
-
-const unauthorizedAxiosInstance: AxiosInstance = axios.create({
-   baseURL: API_URL,
-   headers: commonHeaders,
-   withCredentials: true,
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  timeout: 10000, // 10 second timeout
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true // If using cookies
 });
 
-const authorizedAxiosInstance: AxiosInstance = axios.create({
-   baseURL: API_URL,
-   headers: commonHeaders,
-   withCredentials: true,
-});
-
-authorizedAxiosInstance.interceptors.request.use(
-   async (config) => {
-      // Get token from document.cookie instead of react-cookie
-      const token = document.cookie
-         .split("; ")
-         .find((row) => row.startsWith("auth_token="))
-         ?.split("=")[1];
-
-      if (token) {
-         config.headers["Authorization"] = `Bearer ${token}`;
-      }
-      return config;
-   },
-   (error) => {
-      return Promise.reject(error);
-   }
+// Add response interceptor for better error handling
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.code === 'ECONNABORTED') {
+      throw new Error('Request timeout');
+    }
+    if (!error.response) {
+      throw new Error('Network error - could not reach server');
+    }
+    return Promise.reject(error);
+  }
 );
 
-export const unauthorizedAPI = unauthorizedAxiosInstance;
-export const authorizedAPI = authorizedAxiosInstance;
+export default api;

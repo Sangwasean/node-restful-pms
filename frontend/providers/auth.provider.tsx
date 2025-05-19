@@ -3,9 +3,9 @@
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { jwtDecode } from "jwt-decode";
-import { authorizedAPI } from "@/lib/api";
+import authorizedAPI from "@/lib/api";
 import BounceLoader from "react-spinners/BounceLoader";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; 
 
 interface AuthProviderProps {
    children: ReactNode;
