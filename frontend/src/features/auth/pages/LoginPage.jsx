@@ -32,7 +32,7 @@ const LoginPage = () => {
         
         if (isAuth && user) {
           console.log('Navigation triggered from onSuccess')
-          navigate('/parking-slots', { replace: true }) // Added replace option
+          navigate('/', { replace: true }) // Added replace option
         }
       }
     },
@@ -50,7 +50,7 @@ const LoginPage = () => {
   useEffect(() => {
     // Check if we're already authenticated (in case of page refresh)
     if (authService.isAuthenticated() && authService.getCurrentUser()) {
-      navigate('/parking-slots', { replace: true })
+      navigate('/', { replace: true })
     }
   }, [navigate])
 
