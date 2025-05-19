@@ -18,7 +18,6 @@ class ParkingService {
       return prisma.parkingSlot.findMany({
          where: {
             isAvailable: true,
-            // You can add vehicle type specific logic here
          },
       });
    }

@@ -17,7 +17,7 @@ const router  = Router()
 
 router.use("/auth", AuthRouter)
 router.use("/bookings",BookingRouter)
-router.use("/parking", ParkingRouter)
+router.use("/parking-slots", ParkingRouter)
 router.use('/users', UsersRouter);
 router.use('/payments', PaymentRouter);
 router.use('/vehicles', VehicleRouter);

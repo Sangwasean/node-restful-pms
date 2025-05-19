@@ -9,8 +9,8 @@ import { validationMiddleware } from "../middlewares/validation.middleware";
 const router = Router();
 
 // Public routes
-router.get("/slots", parkingController.getParkingSlots);
-router.get("/slots/available", parkingController.getAvailableSlots);
+router.get("/", parkingController.getParkingSlots);
+router.get("/available", parkingController.getAvailableSlots);
 
 // Protected routes
 router.post(
