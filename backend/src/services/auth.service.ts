@@ -4,12 +4,15 @@ import { CreateUserDto, LoginDto } from '../types/custom.types';
 import { BadRequestError, NotFoundError, UnauthorizedError } from '../utils/helpers';
 import { comparePassword, hashPassword } from '../utils/bcrypt';
 import { generateToken } from '../utils/jwt';
+import { UserRole } from '../types/enums';
 
 const prisma = new PrismaClient();
 
+
 class AuthService {
   async register(userData: CreateUserDto): Promise<User> {
-    const { email, password, firstName, lastName } = userData;
+
+    const { email, password, firstName, lastName, role } = userData;
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -30,7 +33,7 @@ class AuthService {
         password: await hashedPassword,
         firstName,
         lastName,
-        role: 'USER',
+        role: role || UserRole.USER,
       },
     });
   }

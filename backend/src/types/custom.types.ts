@@ -1,5 +1,7 @@
 // types/custom.types.ts
-import { IsInt, IsNotEmpty, IsDateString, IsString } from "class-validator";
+import { IsInt, IsNotEmpty, IsDateString, IsString, IsEnum, IsOptional } from "class-validator";
+
+import { UserRole } from "./enums";
 
 export class CreateBookingDto {
    @IsString()
@@ -37,6 +39,10 @@ export class CreateUserDto {
 
    @IsNotEmpty()
    lastName: string;
+
+   @IsOptional()
+   @IsEnum(UserRole)
+   role ?: UserRole;
 }
 
 export class LoginDto {
