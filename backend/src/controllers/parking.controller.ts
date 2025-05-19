@@ -1,4 +1,3 @@
-// controllers/parking.controller.ts
 import { Request, Response } from "express";
 import parkingService from "../services/parking.service";
 import { CreateBookingDto, ExtendBookingDto } from "../types/custom.types";

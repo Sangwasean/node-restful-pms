@@ -1,7 +1,8 @@
-// utils/jwt.ts
+// @ts-nocheck
 import jwt from "jsonwebtoken";
 import { UnauthorizedError, BadRequestError, InternalServerError } from "./helpers";
 import logger from "./logger";
+
 
 interface TokenPayload {
   id: string;

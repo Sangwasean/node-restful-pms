@@ -13,10 +13,10 @@
     "prisma:studio": "npx prisma studio"
   },
   "keywords": [],
-  "author": "Iradukunda Bertin",
+  "author": "Hirwa sean",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "^5.22.0",
     "@types/passport-google-oauth2": "^0.1.10",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
@@ -41,6 +41,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "pnpm": "^10.11.0",
     "swagger-ui-express": "^5.0.0",
     "winston": "^3.17.0",
     "zod": "^3.24.4"
@@ -61,6 +62,7 @@
     "@types/passport": "^1.0.14",
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
+    "@types/swagger-ui-express": "^4.1.8",
     "nodemon": "^3.1.7",
     "prisma": "^5.20.0",
     "ts-node": "^10.9.2",

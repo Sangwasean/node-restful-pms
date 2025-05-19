@@ -6,7 +6,12 @@ import { UsersRouter } from "./user.routes";
 import { PaymentRouter } from "./payment.routes";
 import { VehicleRouter } from "./vehicle.routes";
 
-
+console.log("AuthRouter:", AuthRouter);
+console.log("BookingRouter:", BookingRouter);
+console.log("ParkingRouter:", ParkingRouter);
+console.log("UsersRouter:", UsersRouter);
+console.log("PaymentRouter:", PaymentRouter);
+console.log("VehicleRouter:", VehicleRouter);
 
 const router  = Router()
 
@@ -16,7 +21,6 @@ router.use("/parking", ParkingRouter)
 router.use('/users', UsersRouter);
 router.use('/payments', PaymentRouter);
 router.use('/vehicles', VehicleRouter);
-router.use('/bookings', BookingRouter);
 
 
 
