@@ -1,87 +1,86 @@
-import { Link } from "react-router-dom"
-import { useAllPayments } from "../hooks/usePayments"
-import Card from "../../../components/common/atoms/Card"
-import Badge from "../../../components/common/atoms/Badge"
-import Table from "../../../components/common/organisms/Table"
-import { CreditCardIcon } from "lucide-react"
+import { useState, useEffect } from 'react';
+import Table from '../../../components/common/organisms/Table';
+import Button from '../../../components/common/atoms/Button';
+import parkingService from '../../../services/parkingService';
 
-const PaymentListPage = () => {
-  const { data: payments, isLoading } = useAllPayments()
+const ParkingSlotListPage = () => {
+  const [slots, setSlots] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const getStatusBadge = (status) => {
-    const variants = {
-      PENDING: "warning",
-      COMPLETED: "success",
-      FAILED: "danger",
-      REFUNDED: "primary",
-    }
+  useEffect(() => {
+    const fetchSlots = async () => {
+      try {
+        const data = await parkingService.getAll();
+        console.log('API Data:', data); // Verify the exact structure
+        
+        // Transform data to match our table's expectations
+        const formattedSlots = data.map(slot => ({
+          id: slot.id,
+          name: slot.number || 'Unnamed', // Map 'number' to 'name'
+          status: slot.isAvailable !== undefined ? slot.isAvailable : 'unknown'
+        }));
+        
+        setSlots(formattedSlots);
+      } catch (err) {
+        console.error('Fetch Error:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return <Badge variant={variants[status] || "default"}>{status}</Badge>
-  }
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(amount)
-  }
+    fetchSlots();
+  }, []);
 
   const columns = [
     {
-      header: "Booking",
-      accessor: "booking.id",
-      cell: (row) => (
-        <Link to={`/bookings/${row.booking.id}`} className="text-blue-600 hover:text-blue-800">
-          Slot {row.booking.parkingSlot.number}
-        </Link>
+      header: 'ID',
+      accessor: 'id',
+      cell: (value) => value || 'N/A',
+    },
+    {
+      header: 'Number', // Changed from 'Name' to match your data
+      accessor: 'name', // Now correctly mapped to your 'number' field
+      cell: (value) => value || 'N/A',
+    },
+    {
+      header: 'Status',
+      accessor: 'status',
+      cell: (value) => {
+        if (value === true) return 'Available';
+        if (value === false) return 'Occupied';
+        return 'Unknown';
+      },
+    },
+    {
+      header: 'Actions',
+      cell: (_, row) => (
+        <div className="flex space-x-2">
+          <Button size="sm">Edit</Button>
+          <Button variant="danger" size="sm">Delete</Button>
+        </div>
       ),
     },
-    {
-      header: "Amount",
-      accessor: "amount",
-      cell: (row) => <span className="font-medium">{formatCurrency(row.amount)}</span>,
-    },
-    {
-      header: "Method",
-      accessor: "method",
-      cell: (row) => <span className="capitalize">{row.method.toLowerCase()}</span>,
-    },
-    {
-      header: "Date",
-      accessor: "createdAt",
-      cell: (row) => <span>{new Date(row.createdAt).toLocaleString()}</span>,
-    },
-    {
-      header: "Status",
-      accessor: "status",
-      cell: (row) => getStatusBadge(row.status),
-    },
-  ]
+  ];
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Payment History</h1>
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Parking Slots</h1>
+        <Button>Add New Slot</Button>
       </div>
-
-      <Card>
-        <Card.Body className="p-0">
-          <Table
-            columns={columns}
-            data={payments}
-            isLoading={isLoading}
-            emptyMessage={
-              <div className="flex flex-col items-center py-8">
-                <CreditCardIcon className="h-12 w-12 text-gray-400 mb-3" />
-                <p className="text-gray-500">No payment records found</p>
-              </div>
-            }
-          />
-        </Card.Body>
-      </Card>
+      
+      <Table
+        columns={columns}
+        data={slots}
+        emptyMessage="No parking slots available"
+      />
     </div>
-  )
-}
+  );
+};
 
-export default PaymentListPage
+export default ParkingSlotListPage;

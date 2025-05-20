@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import  Table  from '../../../components/common/organisms/Table';
-import  Button  from '../../../components/common/atoms/Button';
-import { parkingService } from '../../../services/parkingService';
+import Table from '../../../components/common/organisms/Table';
+import Button from '../../../components/common/atoms/Button';
+import parkingService from '../../../services/parkingService';
 
 const ParkingSlotListPage = () => {
   const [slots, setSlots] = useState([]);
@@ -12,7 +12,8 @@ const ParkingSlotListPage = () => {
     const fetchSlots = async () => {
       try {
         const data = await parkingService.getAll();
-        setSlots(data || []); // Ensure we always have an array
+        console.log('API Response:', data);
+        setSlots(data || []); 
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -27,26 +28,29 @@ const ParkingSlotListPage = () => {
     {
       header: 'ID',
       accessor: 'id',
-      cell: (value) => value || 'N/A', // Safe handling of undefined
+      cell: (value) => String(value || 'N/A'),
     },
     {
       header: 'Name',
       accessor: 'name',
-      cell: (value) => (value ? value.toLowerCase() : 'N/A'), // Safe .toLowerCase()
+      cell: (value) => (value ? String(value).toLowerCase() : 'N/A'),
     },
     {
       header: 'Status',
       accessor: 'status',
-      cell: (value) => (value || 'unknown').toLowerCase(), // Safe default
+      cell: (value) => {
+        const status = value ? String(value) : 'unknown';
+        return status.toLowerCase();
+      },
     },
     {
       header: 'Actions',
-      cell: (_, rowData) => (
+      cell: () => ( // Removed unused rowData parameter
         <div className="flex space-x-2">
           <Button size="sm">Edit</Button>
           <Button variant="danger" size="sm">
             Delete
-          </Button>
+        </Button>
         </div>
       ),
     },

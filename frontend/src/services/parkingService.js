@@ -1,11 +1,15 @@
 import api from "./api"
 
 export const parkingService = {
-  getAllParkingSlots: async () => {
-    const response = await api.get("/parking-slots")
-    return response.data
+  getAll: async () => {
+    try {
+      const response = await api.get('/parking-slots');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching parking slots:', error);
+      throw error;
+    }
   },
-
   getAvailableParkingSlots: async () => {
     const response = await api.get("/parking-slots/available")
     return response.data
@@ -26,3 +30,5 @@ export const parkingService = {
     return response.data
   },
 }
+
+export default parkingService;
